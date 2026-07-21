@@ -13,7 +13,7 @@
   :root {
     --blue: #0055A4; --blue-dark: #003E7A; --blue-light: #2D7DE2; --blue-soft: #EFF6FF;
     --cream: #FFF8F0; --ink: #1A1A1A; --muted: #6B6B73; --line: #E8E8EC; --bg: #FAFAFA;
-    --emerald: #10B981; --gold: #F5A623;
+    --emerald: #10B981; --gold: #F5A623; --red: #e30613;
   }
   * { -webkit-font-smoothing: antialiased; box-sizing: border-box; }
   html, body { background: var(--bg); color: var(--ink); font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -139,6 +139,86 @@
   }
   .city-card:hover::before { transform: scaleY(1); transform-origin: top; }
 
+  /* === ANIMASI PENAMBAHAN KUOTA === */
+  .quota-alert-section {
+    position: relative;
+    background: #001233;
+    padding: 25px 15px;
+    overflow: hidden;
+    border-top: 4px solid var(--gold);
+    border-bottom: 4px solid var(--gold);
+    z-index: 20;
+  }
+  .quota-alert-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(45deg, #003E7A, #0055A4, #003E7A);
+    background-size: 200% 200%;
+    animation: bgShift 4s ease infinite;
+    opacity: 0.9;
+  }
+  @keyframes bgShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .quota-alert-bg::after {
+    content: ''; position: absolute; top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    animation: shimmerSlide 3s infinite;
+  }
+  @keyframes shimmerSlide {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+  .quota-alert-content {
+    position: relative; z-index: 10;
+    display: flex; align-items: center; justify-content: center;
+    gap: 20px; max-width: 1000px; margin: 0 auto;
+  }
+  .alert-icon {
+    color: var(--gold); font-size: 2rem;
+    animation: shakeIcon 1s ease-in-out infinite;
+    text-shadow: 0 0 15px rgba(245, 166, 35, 0.6);
+  }
+  .alert-icon.right { animation-delay: 0.5s; }
+  @keyframes shakeIcon {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(-10deg) scale(1.1); }
+    75% { transform: rotate(10deg) scale(1.1); }
+  }
+  .alert-text-wrapper { text-align: center; }
+  .alert-main-text {
+    font-family: 'Anton', sans-serif; font-size: 1.5rem; line-height: 1.2;
+    letter-spacing: 1px; text-transform: uppercase;
+  }
+  @media (min-width: 768px) {
+    .alert-main-text { font-size: 2.5rem; }
+    .alert-icon { font-size: 3rem; }
+  }
+  .text-glow-gold-alert {
+    color: var(--gold);
+    text-shadow: 0 0 10px rgba(245, 166, 35, 0.8), 0 0 20px rgba(245, 166, 35, 0.4);
+    animation: pulseGlow 1.5s infinite alternate;
+  }
+  .text-glow-red-alert {
+    color: #ff3b3b;
+    text-shadow: 0 0 10px rgba(255, 59, 59, 0.8), 0 0 20px rgba(255, 59, 59, 0.4);
+    animation: pulseGlow 1.5s infinite alternate;
+  }
+  @keyframes pulseGlow {
+    from { text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
+    to { text-shadow: 0 0 25px rgba(255, 255, 255, 0.9); }
+  }
+  .alert-sub-text {
+    font-size: 0.9rem; color: #9ab4cc; margin-top: 8px; font-weight: 600;
+    animation: blinkText 2s infinite;
+  }
+  @keyframes blinkText {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
   @media print {
     body * { visibility: hidden; }
     .step-panel[data-panel="4"], .step-panel[data-panel="4"] * { visibility: visible; }
@@ -207,6 +287,24 @@
 <span>● 25 JULI 2026</span><span>● REGULAR RP 125.000</span><span>● MEMBER RP 100.000 (MIN BELANJA 50K)</span><span>● HADIAH MOTOR &amp; SMARTWATCH</span><span>● ENTERTAINMENT: COCO LENSE &amp; WIZZ BAKER</span><span>● GOODIE BAG</span><span>● MEDALI FINISHER</span><span>● JERSEY EKSKLUSIF</span>
 </div>
 </div>
+</section>
+
+<!-- === ANIMASI PENAMBAHAN KUOTA (TEPAT DI BAWAH BANNER) === -->
+<section class="quota-alert-section no-print">
+  <div class="quota-alert-bg"></div>
+  <div class="quota-alert-content">
+    <i class="fa-solid fa-triangle-exclamation alert-icon"></i>
+    <div class="alert-text-wrapper">
+      <h2 class="alert-main-text text-white">
+        <span class="text-glow-gold-alert">⚠️ PENAMBAHAN KUOTA</span> 
+        UNTUK 
+        <span class="text-glow-red-alert">30 PESERTA</span> 
+        TERPILIH!
+      </h2>
+      <p class="alert-sub-text">Segera daftarkan diri Anda sebelum kuota tambahan ini habis!</p>
+    </div>
+    <i class="fa-solid fa-triangle-exclamation alert-icon right"></i>
+  </div>
 </section>
 
 <!-- CITY SELECTION SECTION -->
